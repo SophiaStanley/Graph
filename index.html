@@ -15,12 +15,16 @@
 </body>
 <script>
 let hovering = false; // checking if you're hovering over the legend specifically, NOT the graph items
-let tooltips = ["Top Game: Pokemon Black 2 (70:54)", "Top Game: Pokemon X (1191:03)", "Top Game: Pokemon Alpha Sapphire (46:24)", "Top Game: Pokemon Alpha Sapphire (173:02)", "Top Game: Phoenix Wright: Ace Attorney: Spirit of Justice (176:13)", "Top Game: Pokemon Alpha Sapphire (55:37)"];
+// array of the top game of each year, aligned to each year for when you hover over the legend
+let tooltips = ["Total Playtime: 132:10 <br> Top Game: Pokemon Black 2 (70:54)", "Total Playtime: 1489:42 <br> Top Game: Pokemon X (1191:03)", "Total Playtime: 92:48 <br> Top Game: Pokemon Alpha Sapphire (46:24)", 
+"Total Playtime: 320:34 <br> Top Game: Pokemon Alpha Sapphire (173:02)", "Total Playtime: 469:16 <br> Top Game: Phoenix Wright: Ace Attorney: Spirit of Justice (176:13)", 
+"Total Playtime: 112:49 <br> Top Game: Pokemon Alpha Sapphire (55:37)", "Total Playtime: 155:11 <br> Top Game: WarioWare Gold (34:10)", "Total Playtime: 50:38 <br> Top Game: WarioWare Gold (28:36)", "Total Playtime: 33:43 <br> Top Game: Pokemon Black 2 (16:56)", 
+"Total Playtime: 88:08 <br> Top Game: Pokemon X (38:45)", "Total Playtime: 90:41 <br> Top Game: Pokemon Ultra Moon (41:53)", "Total Playtime: 169:14 <br> Top Game: Pokemon Ultra Moon (102:28)", "Total Playtime: 75:17 <br> Top Game: Pokemon Ultra Moon (35:24)"];
+// x values
 const xValues = ['January', 'February','March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-const games = ['N/A', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A', 'Pokemon Black 2', 'Pokemon Black 2', 'Nintendo eShop', 'Pokemon Black 2', 'Pokemon Y']
 const ctx = document.getElementById("graph");
 
-new Chart(ctx, {
+new Chart(ctx, { // creating the chart
   id: "Chart",
   type: "line",
   data: {
@@ -118,13 +122,6 @@ new Chart(ctx, {
   },
   options: {
     plugins: {
-      tooltip: {
-               callbacks: {
-                    label: (context) => {
-                      console.log(context);
-                    }
-                }
-              },
       legend: { 
         onHover: function(event, legendItem) {
           if (hovering) {
@@ -134,10 +131,12 @@ new Chart(ctx, {
           tooltip.innerHTML = tooltips[legendItem.datasetIndex];
           tooltip.style.left = event.x + "px";
           tooltip.style.top = event.y + "px";
+          tooltip.style.padding = "0.5%"; // only increase the padding when text is shown, otherwise there's a black bar at the screen at all times
         },
         onLeave: function() {
           hovering = false;
           tooltip.innerHTML = "";
+          tooltip.style.padding = "0%"; // removing the padding so the tooltip disappears completely from view
         }},
       zoom: {
         pan: {

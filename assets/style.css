@@ -1,0 +1,14 @@
+h1{
+    text-align: center;
+    font-family:'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+div{
+    font-family:'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    color: white;
+    background-color: black;
+    height: 20%;
+    width: 20%;
+    position: sticky; /* i like it slightly more than relative cause it doesn't change position depending on where your mouse hits the legend */
+    padding: 0%; /* changes when tooltip is active */
+}
