@@ -11,13 +11,17 @@
   <h1>My 3DS Playtime Over the Years</h1>
     <canvas id = "graph" height = "100px">
     </canvas>
+    <div id="tooltip"></div>
 </body>
 <script>
+let hovering = false; // checking if you're hovering over the legend specifically, NOT the graph items
+let tooltips = ["Top Game: Pokemon Black 2 (70:54)", "Top Game: Pokemon X (1191:03)", "Top Game: Pokemon Alpha Sapphire (46:24)", "Top Game: Pokemon Alpha Sapphire (173:02)", "Top Game: Phoenix Wright: Ace Attorney: Spirit of Justice (176:13)", "Top Game: Pokemon Alpha Sapphire (55:37)"];
 const xValues = ['January', 'February','March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-
+const games = ['N/A', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A', 'Pokemon Black 2', 'Pokemon Black 2', 'Nintendo eShop', 'Pokemon Black 2', 'Pokemon Y']
 const ctx = document.getElementById("graph");
 
 new Chart(ctx, {
+  id: "Chart",
   type: "line",
   data: {
     labels: xValues,
@@ -114,7 +118,27 @@ new Chart(ctx, {
   },
   options: {
     plugins: {
-      legend: { display: true },
+      tooltip: {
+               callbacks: {
+                    label: (context) => {
+                      console.log(context);
+                    }
+                }
+              },
+      legend: { 
+        onHover: function(event, legendItem) {
+          if (hovering) {
+            return;
+          }
+          hovering = true;
+          tooltip.innerHTML = tooltips[legendItem.datasetIndex];
+          tooltip.style.left = event.x + "px";
+          tooltip.style.top = event.y + "px";
+        },
+        onLeave: function() {
+          hovering = false;
+          tooltip.innerHTML = "";
+        }},
       zoom: {
         pan: {
           enabled: true,
@@ -128,7 +152,7 @@ new Chart(ctx, {
           },
           mode: 'xy',
         }
-    }
+    },
   }
 }});
 </script>
